@@ -1,0 +1,40 @@
+{
+  "name": "sbs-affordability-types",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rimraf dist",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "mortgage",
+    "dto",
+    "schemas",
+    "zod"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RwCCGB/SBS-Affordability-Types.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/RwCCGB/SBS-Affordability-Types/issues"
+  },
+  "homepage": "https://github.com/RwCCGB/SBS-Affordability-Types#readme",
+  "dependencies": {
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.9.2"
+  }
+}
