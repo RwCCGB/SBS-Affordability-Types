@@ -1,6 +1,6 @@
 {
   "name": "sbs-affordability-types",
-  "version": "1.0.10",
+  "version": "1.0.16",
   "description": "Library containing SBS Affordability types",
   "homepage": "https://github.com/RwCCGB/SBS-Affordability-Types#readme",
   "bugs": {
@@ -17,7 +17,9 @@
   "module": "./dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "index.ts",
+    "./src/schemas/",
+    "./src/types/"
   ],
   "keywords": [
     "types"
