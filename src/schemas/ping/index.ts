@@ -1,0 +1,1 @@
+export { pingRequestSchema } from "./pingRequestSchema";
