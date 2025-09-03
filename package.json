@@ -1,0 +1,40 @@
+{
+  "name": "sbs-affordability-types",
+  "version": "1.0.10",
+  "description": "Library containing SBS Affordability types",
+  "homepage": "https://github.com/RwCCGB/SBS-Affordability-Types#readme",
+  "bugs": {
+    "url": "https://github.com/RwCCGB/SBS-Affordability-Types/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RwCCGB/SBS-Affordability-Types.git"
+  },
+  "license": "ISC",
+  "author": "SBS",
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "types"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "jest"
+  },
+  "dependencies": {
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "jest": "^30.1.3",
+    "ts-jest": "^29.4.1",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2"
+  }
+}

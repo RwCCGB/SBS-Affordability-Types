@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "composite": true,
+    "declarationDir": "./dist",
+    "noEmit": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "target": "esnext",
+    "types": ["jest"],
+    "declaration": true,
+    "outDir": "./dist"
+  },
+  "include": ["src/**/*", "index.ts"],
+  "exclude": ["node_modules", "./dist"]
+}
