@@ -10,8 +10,7 @@ But I did get it working by publishing the library to a private package.
 
 So this is the way I suggest we consume this library going forward.
 
-Instructions:
-=============
+# Instructions:
 
 1. Open SBS-Affordability-Types in VS Code and type npm link in a terminal window.
 2. Open whichever repo that is going to consume this library and type npm link sbs-affordability-types in a terminal window.

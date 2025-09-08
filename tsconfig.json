@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "strictNullChecks": true,
     "composite": true,
     "declarationDir": "./dist",
     "noEmit": true,
