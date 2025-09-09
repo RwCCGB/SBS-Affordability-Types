@@ -12,14 +12,14 @@ export const affordabilityRequestSchema = z.object({
         z.object({
           allExpenditureItems: z.array(
             z.object({
-              myApplicant: z.literal([1, 0]),
+              myApplicant: z.number().positive().min(1).max(4),
               expenditureAmount: z.number().positive(),
               stcExpenditureType: z.int().positive(),
             }),
           ),
           allIncomeItems: z.array(
             z.object({
-              myApplicant: z.literal([1, 0]),
+              myApplicant: z.number().positive().min(1).max(4),
               annualAmount: z.number().positive(),
               stcIncomeType: z.int().positive(),
             }),

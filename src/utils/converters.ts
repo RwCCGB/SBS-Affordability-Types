@@ -1,35 +1,118 @@
-import { formField, IApplicant, affordabilityRequest } from "../types";
+import {
+  formField,
+  IApplicant,
+  affordabilityRequest,
+  oneApplicantAffordabilityRequest,
+  twoApplicantAffordabilityRequest,
+  threeApplicantAffordabilityRequest,
+  fourApplicantAffordabilityRequest,
+} from "../types";
+
+type Field = {
+  name: string;
+  applicantId: number;
+  type: "Application" | "Income" | "Expenditure";
+  id: number;
+  value: number;
+};
+
+const getBaseAffordabilityRequest = (
+  numberOfApplicants: number,
+): affordabilityRequest => {
+  switch (numberOfApplicants) {
+    case 1:
+      return oneApplicantAffordabilityRequest();
+    case 2:
+      return twoApplicantAffordabilityRequest();
+    case 3:
+      return threeApplicantAffordabilityRequest();
+    case 4:
+      return fourApplicantAffordabilityRequest();
+    default:
+      throw `Sorry, ${numberOfApplicants} applicant(s) is not supported`;
+  }
+};
+
+const toField = (applicantId: number, field: formField): Field => ({
+  name: field.name,
+  applicantId: applicantId,
+  type: "Application",
+  id: field.id,
+  value: field.value,
+});
 
 export const toAffordabilityRequest = (
   application: formField[],
   applicants: IApplicant[],
 ): Partial<affordabilityRequest> => {
-  const request: Partial<affordabilityRequest> = {};
-
-  const lookup = (fieldName: string): Number => {
-    return Number(application.find((field) => field.name === fieldName)?.value);
+  const request: affordabilityRequest = getBaseAffordabilityRequest(
+    applicants.length,
+  );
+  const getApplicationFields = (field: formField): Field => toField(0, field);
+  const getIncomeFields = (applicant: IApplicant): Field[] => {
+    return applicant.incomeData.map((field) => {
+      return { ...toField(applicant.applicantId, field), type: "Income" };
+    });
+  };
+  const getExpenditureFields = (applicant: IApplicant): Field[] => {
+    return applicant.expenditureData.map((field) => {
+      return { ...toField(applicant.applicantId, field), type: "Expenditure" };
+    });
   };
 
-  /*
-  TODO: Work in progress
-  request.numberOfApplicants = lookup("numberOfApplicants");
-  request.region = lookup("region");
-  request.interestOnlyAmount = lookup("interestOnlyAmount");
-  request.isNewBuild = lookup("isNewBuild");
-  request.myMortgageApplication = {
-    allApplicants: [
-      {
-        employmentStatus: 1,
-        firstTimeBuyer: 1,
-        residentialStatus: 1,
-        allIncomeItems: [],
-        allExpenditureItems: [],
-      },
-    ],
-  };
-  */
+  const fields: Array<Field> = application
+    .map(getApplicationFields)
+    .concat(applicants.flatMap(getIncomeFields))
+    .concat(applicants.flatMap(getExpenditureFields));
 
-  //console.log(request, "................");
+  const keys = Object.keys(request).concat(
+    Object.keys(request.myMortgageApplication),
+  );
+
+  const keyExists = (key: string): boolean => keys.indexOf(key) !== -1;
+
+  for (let i = 0; i < fields.length; i++) {
+    const key = fields[i].name;
+    const value = fields[i].value;
+    if (keyExists(key)) {
+      if (request[key]) {
+        request[key] = value;
+      } else {
+        request["myMortgageApplication"][key] = value;
+      }
+    }
+  }
+
+  for (let i = 0; i < applicants.length; i++) {
+    /*...deal with each applicant, adding income & expenditure items for each*/
+    const income = fields.filter(
+      (field) => field.applicantId === i + 1 && field.type === "Income",
+    );
+    for (let j = 0; j < income.length; j++) {
+      const newIncomeItem = {
+        myApplicant: income[j].applicantId,
+        annualAmount: income[j].value,
+        stcIncomeType: 1,
+      };
+      request.myMortgageApplication.allApplicants[i].allIncomeItems.push(
+        newIncomeItem,
+      );
+    }
+
+    const expenditure = fields.filter(
+      (field) => field.applicantId === i + 1 && field.type === "Expenditure",
+    );
+    for (let j = 0; j < expenditure.length; j++) {
+      const newExpenditureItem = {
+        myApplicant: expenditure[j].applicantId,
+        expenditureAmount: expenditure[j].value,
+        stcExpenditureType: 1,
+      };
+      request.myMortgageApplication.allApplicants[i].allExpenditureItems.push(
+        newExpenditureItem,
+      );
+    }
+  }
 
   return request;
 };
