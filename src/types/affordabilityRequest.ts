@@ -17,7 +17,7 @@ export const oneApplicantAffordabilityRequest = (): affordabilityRequest => {
           allIncomeItems: [],
           employmentStatus: 1,
           firstTimeBuyer: 0,
-          residentialStatus: 0,
+          residentialStatus: 1,
         },
       ],
       applicationSource: 0,

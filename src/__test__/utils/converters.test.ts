@@ -108,6 +108,21 @@ const formFields: formField[] = [
     errorMessage: "",
     validationGroup: 0,
   },
+  {
+    id: 8,
+    name: "termYears",
+    value: 25,
+    type: "number",
+    required: true,
+    minAmount: 0,
+    maxAmount: 1,
+    labelText: "Is new build?",
+    labelSubtext: "",
+    afterFieldText: "",
+    isValid: true,
+    errorMessage: "",
+    validationGroup: 0,
+  },
 ];
 
 const applicant: IApplicant = {

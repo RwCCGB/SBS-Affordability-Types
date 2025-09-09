@@ -75,7 +75,7 @@ export const toAffordabilityRequest = (
     const key = fields[i].name;
     const value = fields[i].value;
     if (keyExists(key)) {
-      if (request[key]) {
+      if (Object.hasOwn(request, key)) {
         request[key] = value;
       } else {
         request["myMortgageApplication"][key] = value;
