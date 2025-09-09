@@ -44,7 +44,7 @@ const toField = (applicantId: number, field: formField): Field => ({
 export const toAffordabilityRequest = (
   application: formField[],
   applicants: IApplicant[],
-): Partial<affordabilityRequest> => {
+): affordabilityRequest => {
   const request: affordabilityRequest = getBaseAffordabilityRequest(
     applicants.length,
   );

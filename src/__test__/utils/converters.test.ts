@@ -245,10 +245,6 @@ describe("converters", () => {
     //Assert
     expect(data).not.toBeNull();
     expect(data.numberOfApplicants).toBe(1);
-
-
-    console.log(JSON.stringify(data));
-
   });
 
   it("verify a collection of formfields for dual applicants is converted to a valid affordabilityRequest object", async () => {
