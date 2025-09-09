@@ -7,7 +7,7 @@ export type validateResult =
   | {
       success: true;
     }
-  | { success: false; errorMessage: string };
+  | { success: false; errorMessage: string, errors: string[] };
 
 export const validatePingRequest = (request: pingRequest): validateResult => {
   const data = pingRequestSchema.safeParse(request);
@@ -18,7 +18,8 @@ export const validatePingRequest = (request: pingRequest): validateResult => {
     let error: z.ZodError = data.error;
     let prettyError = z.prettifyError(error);
     const errorMessage = `Ping request schema validation failure. See below for extra detail: ${prettyError}.`;
-    return { success, errorMessage } as validateResult;
+    const errors = prettyError.split("✖");
+    return { success, errorMessage, errors } as validateResult;
   }
 };
 
@@ -33,6 +34,7 @@ export const validateAffordabilityRequest = (
     let error: z.ZodError = data.error;
     let prettyError = z.prettifyError(error);
     const errorMessage = `Affordability request schema validation failure. See below for extra detail: ${prettyError}.`;
-    return { success, errorMessage } as validateResult;
+    const errors = prettyError.split("✖");
+    return { success, errorMessage, errors } as validateResult;
   }
 };
