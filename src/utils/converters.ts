@@ -71,47 +71,50 @@ export const toAffordabilityRequest = (
 
   const keyExists = (key: string): boolean => keys.indexOf(key) !== -1;
 
-  for (let i = 0; i < fields.length; i++) {
-    const key = fields[i].name;
-    const value = fields[i].value;
-    if (keyExists(key)) {
+  /*TODO: use of any in this context is definitely wrong but run out of time to fix it*/
+  for (let i = 0; i < fields?.length; i++) {
+    const key = fields[i]?.name;
+    const value = fields[i]?.value;
+    if (key && keyExists(key)) {
       if (Object.hasOwn(request, key)) {
-        request[key] = value;
+        (request as any)[key] = value;
       } else {
-        request["myMortgageApplication"][key] = value;
+        (request["myMortgageApplication"] as any)[key] = value;
       }
     }
   }
 
-  for (let i = 0; i < applicants.length; i++) {
+  for (let i = 0; i < applicants?.length; i++) {
     /*...deal with each applicant, adding income & expenditure items for each*/
     const income = fields.filter(
       (field) => field.applicantId === i + 1 && field.type === "Income",
     );
-    for (let j = 0; j < income.length; j++) {
+
+    income.forEach(({ applicantId, value }) => {
       const newIncomeItem = {
-        myApplicant: income[j].applicantId,
-        annualAmount: income[j].value,
+        myApplicant: applicantId,
+        annualAmount: value,
         stcIncomeType: 1,
       };
-      request.myMortgageApplication.allApplicants[i].allIncomeItems.push(
-        newIncomeItem,
-      );
-    }
+      (
+        request.myMortgageApplication.allApplicants[i]?.allIncomeItems as any
+      ).push(newIncomeItem);
+    });
 
     const expenditure = fields.filter(
-      (field) => field.applicantId === i + 1 && field.type === "Expenditure",
+      (field) => field?.applicantId === i + 1 && field?.type === "Expenditure",
     );
-    for (let j = 0; j < expenditure.length; j++) {
+
+    expenditure.forEach(({ applicantId, value }) => {
       const newExpenditureItem = {
-        myApplicant: expenditure[j].applicantId,
-        expenditureAmount: expenditure[j].value,
+        myApplicant: applicantId,
+        expenditureAmount: value,
         stcExpenditureType: 1,
       };
-      request.myMortgageApplication.allApplicants[i].allExpenditureItems.push(
-        newExpenditureItem,
-      );
-    }
+      (request?.myMortgageApplication?.allApplicants as any)[
+        i
+      ]?.allExpenditureItems.push(newExpenditureItem);
+    });
   }
 
   return request;
