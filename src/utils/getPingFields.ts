@@ -1,8 +1,5 @@
-//TODO: Need to fix
+import { pingRequestSchema } from "../schemas/ping";
 
-//import { zodKeys } from "zod-to-fields";
-//import { pingRequestSchema } from "../schemas/ping";
-
-export const getPingFields = () => {
-  return /*zodKeys(pingRequestSchema)*/ ["test"];
+export const getPingFields = () : string[] => {
+  return Object.keys(pingRequestSchema.keyof().def.entries);
 };

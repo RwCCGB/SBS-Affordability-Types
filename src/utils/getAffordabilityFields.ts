@@ -1,8 +1,5 @@
-//TODO: Need to fix
+import { affordabilityRequestSchema } from "../schemas/affordability";
 
-//import { zodKeys } from "zod-to-fields";
-//import { affordabilityRequestSchema } from "../schemas/affordability";
-
-export const getAffordabilityFields = () => {
-  return /*zodKeys(affordabilityRequestSchema)*/ ["test"];
+export const getAffordabilityFields = () : string[] => {
+  return Object.keys(affordabilityRequestSchema.keyof().def.entries);
 };
